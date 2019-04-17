@@ -1,0 +1,19 @@
+{'Anand Vihar': 1,
+ 'Aya Nagar, Delhi - IMD': 2,
+ 'Burari Crossing, Delhi - IMD': 3,
+ 'CRRI Mathura Road, Delhi - IMD': 4,
+ 'Delhi Technological University': 5,
+ 'IGI Airport Terminal-3, Delhi - IMD': 6,
+ 'IHBAS': 7,
+ 'Income Tax Office': 8,
+ 'Lodhi Road, Delhi - IMD': 9,
+ 'Mandir Marg': 10,
+ 'NSIT Dwarka': 11,
+ 'North Campus, Delhi - IMD': 12,
+ 'Punjabi Bagh': 13,
+ 'Pusa, Delhi - IMD': 14,
+ 'R K Puram': 15,
+ 'Shadipur': 16,
+ 'Siri Fort': 17}
+
+note: all stations were alphabetically ordered
