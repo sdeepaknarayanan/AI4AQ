@@ -17,7 +17,8 @@ from copy import deepcopy
 import matplotlib
 
     
-df = pd.read_csv('../../Datasets/Updated_Delhi_Scaled.csv')
+# df = pd.read_csv('../../Datasets/Updated_Delhi_Scaled.csv')
+## INCLUDE DIRECTORY OF THE DATASET
 df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
 
 
@@ -140,7 +141,12 @@ station_numbering = {}
 for i in range(len(station_list)):
     station_numbering[station_list[i]] = 'S'+str(i+1)
 
+queried = {i:{} for i in station_list}
 for i in range(len(station_list)):
+    '''if station_list[i]!='R K Puram':
+        continue'''
+    print(station_list[i])
+    print('*'*100)
     test_set = [station_list[i]]
     new_station_list = deepcopy(station_list)
     new_station_list.remove(station_list[i])
@@ -192,6 +198,8 @@ for i in range(len(station_list)):
         if itr%5==0:
             pool_cpy = Pool.copy()
             station_to_add = max_variance_sampling(Pool,learner_list)
+            queried[station_test[0]][itr]  = station_to_add
+            print(station_to_add,'\n')
             x_train, y_train, Pool = update_pool_train(station_to_add, df, x_train, y_train, Pool,day)
         else:
             x_train, y_train, Pool = daily_update(df,x_train,y_train,Pool,day)
@@ -207,8 +215,8 @@ for i in range(len(station_list)):
     del station_train 
     del station_test
     del station_pool
-    
-        
+    plt.plot('*'*60)
+    # continue
     random2 = {i:{j:0 for j in range(31)} for i in range(1,51)}
     random_final = np.zeros(32)
     seed = [i+1 for i in range(50)]
@@ -219,7 +227,7 @@ for i in range(len(station_list)):
         station_train = deepcopy(train_set)
         station_test = deepcopy(test_set)
         station_pool = deepcopy(pool_set)
-        #print(len(station_train),len(station_test),len(station_pool))
+        print(len(station_train),len(station_test),len(station_pool))
         np.random.seed(elem)
         train = pd.concat([df.groupby('Station').get_group(i)[:initial_number_of_days]for i in station_train])
         train = train.loc[:, ~train.columns.str.contains('^Unnamed')]
@@ -270,16 +278,17 @@ for i in range(len(station_list)):
     stddev = np.array(pd.DataFrame(random2).std(axis=1))
     stddev = np.append(np.array([0]),stddev)
     latexify(columns=1)
-    plt.plot(active_learning,marker = '.',label='Active Sampling')
+    plt.plot(active_learning,marker = '*',label='Active Sampling')
     for j in range(1,31,5):
         plt.axvline(j,ls='--',color='k',lw=0.5)
     format_axes(plt.gca())
     plt.errorbar([i for i in range(32)],random_final,yerr=stddev,marker='.',label='Random Sampling')
     #plt.title('Estimation at '+station_numbering[station_test[0]])
+    '''
     plt.xlabel('Number of Days Elapsed')
     plt.ylabel('Mean Absolute Error')
     plt.legend(loc='best', shadow=False)
     plt.tight_layout()
-    plt.savefig('Final_Plots_Check/'+station_numbering[station_test[0]]+'.pdf', dpi=300)
-    plt.close()
+    plt.savefig('Final_Plots_4_marker/'+station_numbering[station_test[0]]+'.pdf', dpi=300)
+    plt.close()'''
     
